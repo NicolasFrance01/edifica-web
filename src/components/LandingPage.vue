@@ -157,7 +157,7 @@ const scrollToCalculator = () => {
   align-items: center;
   gap: 1rem;
 }
-.logo-img { height: 50px; width: auto; }
+.logo-img { height: 60px; width: auto; }
 .brand-name {
   font-weight: 800;
   font-size: 1.5rem;
