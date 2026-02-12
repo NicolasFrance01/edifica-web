@@ -17,8 +17,7 @@ const scrollToCalculator = () => {
     <nav class="navbar glass">
       <div class="container nav-content">
         <div class="logo">
-          <img src="/assets/uploads/logo.jpg" alt="EDIFICA Logo" class="logo-img">
-          <span class="brand-name">EDIFICA</span>
+          <img src="/logo_edifica.png" alt="EDIFICA Obras y Servicios" class="logo-img">
         </div>
         <div class="nav-links">
           <a href="#features">Servicios</a>
@@ -158,7 +157,7 @@ const scrollToCalculator = () => {
   align-items: center;
   gap: 1rem;
 }
-.logo-img { height: 40px; }
+.logo-img { height: 60px; width: auto; }
 .brand-name {
   font-weight: 800;
   font-size: 1.5rem;
