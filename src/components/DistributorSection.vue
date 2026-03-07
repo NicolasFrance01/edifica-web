@@ -5,7 +5,7 @@
       <div class="badge-wrapper">
         <span class="badge">Distribuidor Oficial</span>
       </div>
-      <h2 class="title">PIATRI</h2>
+      <h2 class="title">PUERTAS PIATTI</h2>
       <p class="subtitle">Aberturas de Alta Prestación | PVC & Aluminio</p>
       
       <div class="grid distributor-grid mt-5">
@@ -121,11 +121,13 @@
 .benefit-card h3 {
   font-size: 1.25rem;
   margin-bottom: 0.75rem;
-  font-weight: 700;
+  font-weight: 800;
+  color: #ffffff;
 }
 .benefit-card p {
-  opacity: 0.7;
+  opacity: 0.9;
   line-height: 1.6;
+  color: #f3f4f6;
 }
 
 .btn-gold {

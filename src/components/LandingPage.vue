@@ -114,8 +114,19 @@ const scrollToCalculator = () => {
           <br>
           <a href="https://wa.me/message/EDIFICA" class="btn btn-primary mt-4">Abrir WhatsApp Web</a>
           <br>
-          <div class="socials mt-4">
-            <a href="https://www.facebook.com/profile.php?id=61583482260018&amp;locale=es_LA" target="_blank" class="social-link">Síguenos en Facebook</a>
+          <div class="socials mt-4" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <a href="https://www.facebook.com/profile.php?id=61583482260018&amp;locale=es_LA" target="_blank" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem; background-color: #1877F2; border: none;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+              Facebook
+            </a>
+            <a href="https://www.instagram.com/" target="_blank" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem; background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); border: none;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+              Instagram
+            </a>
+            <a href="#" target="_blank" class="btn btn-outline" title="Próximamente local físico" style="display: inline-flex; align-items: center; gap: 0.5rem; border-color: #ea4335; color: #ea4335;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              Google Maps
+            </a>
           </div>
         </div>
       </div>
@@ -209,10 +220,15 @@ const scrollToCalculator = () => {
   margin-bottom: 2.5rem;
   opacity: 0.9;
 }
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
 .btn-lg {
   padding: 1rem 2rem;
   font-size: 1.1rem;
-  margin-right: 1rem;
 }
 .text-white { color: white !important; }
 
