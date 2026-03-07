@@ -5,7 +5,7 @@
       <div class="badge-wrapper">
         <span class="badge">Distribuidor Oficial</span>
       </div>
-      <h2 class="title">PUERTAS PIATTI</h2>
+      <h2 class="title">PIATRI</h2>
       <p class="subtitle">Aberturas de Alta Prestación | PVC & Aluminio</p>
       
       <div class="grid distributor-grid mt-5">
