@@ -3,7 +3,7 @@ import { ref } from 'vue'
 
 const categories = [
   { id: 'escaleras', name: 'Escaleras', iconPath: 'M8 3v18 M16 3v18 M3 21h18 M3 15h18 M3 9h18' },
-  { id: 'aberturas', name: 'Aberturas Piatri', iconPath: 'M3 3h18v18H3z M12 3v18 M3 12h18' },
+  { id: 'aberturas', name: 'Aberturas Piatti', iconPath: 'M3 3h18v18H3z M12 3v18 M3 12h18' },
   { id: 'interiorismo', name: 'Interiorismo', iconPath: 'M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4' },
   { id: 'artefactos', name: 'Artefactos', iconPath: 'M9 21h6 M12 3a7 7 0 0 0-7 7c0 2.3 1.3 4.3 3.3 5.3C9.8 16.1 10 17.5 10 19v1h4v-1c0-1.5.2-2.9 1.7-3.7 2-1 3.3-3 3.3-5.3a7 7 0 0 0-7-7z' }
 ]
@@ -45,7 +45,7 @@ const activeCategory = ref('escaleras')
         </div>
 
         <div v-if="activeCategory === 'aberturas'" class="category-panel">
-          <h3>Distribuidor Oficial Piatri</h3>
+          <h3>Distribuidor Oficial Piatti</h3>
           <p>La mejor tecnología en aberturas de PVC y Aluminio.</p>
            <div class="product-grid">
             <div class="product-card">Ventana Oscilobatiente</div>
