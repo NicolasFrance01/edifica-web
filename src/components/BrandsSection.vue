@@ -140,6 +140,7 @@ const brands = [
   font-weight: 800;
   letter-spacing: 1px;
   margin: 0;
+  color: white;
 }
 .brand-content p {
   color: #ccc;
