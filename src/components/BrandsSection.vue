@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
 import { contentStore } from '../utils/contentStore'
 
 const props = defineProps({
@@ -10,6 +10,12 @@ const props = defineProps({
 })
 
 const brands = contentStore.brands
+const currentEditingBrand = ref(null)
+
+const triggerUpload = (brand) => {
+  currentEditingBrand.value = brand
+  document.getElementById('brand-file-input').click()
+}
 
 const gridCols = computed(() => {
   const len = brands.length
@@ -26,11 +32,31 @@ const removeBrand = (index) => {
     contentStore.removeBrand(index)
   }
 }
+
+const handleImageUpload = (event, brand) => {
+  const file = event.target.files[0]
+  if (file) {
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      brand.image = e.target.result
+    }
+    reader.readAsDataURL(file)
+  }
+}
 </script>
 
 <template>
   <section id="brands" class="section brands-section" :class="{ 'admin-mode': isEditable }">
     <div class="container">
+      <!-- Hidden File Input -->
+      <input 
+        type="file" 
+        id="brand-file-input" 
+        style="display: none;" 
+        accept="image/*"
+        @change="handleImageUpload($event, currentEditingBrand)"
+      >
+
       <div class="section-header text-center">
         <h2 class="text-white">Nuestras Marcas</h2>
         <p class="section-subtitle">Unidades de negocio especializadas para cada necesidad.</p>
@@ -47,7 +73,13 @@ const removeBrand = (index) => {
             </div>
             <img :src="brand.image" :alt="brand.name">
             <div v-if="isEditable" class="img-edit-overlay">
-              <input v-model="brand.image" class="edit-input url-style" placeholder="URL de imagen">
+              <button 
+                class="btn-upload" 
+                @click="triggerUpload(brand)"
+              >
+                📷 Cambiar Imagen
+              </button>
+              <input v-model="brand.image" class="edit-input url-style" placeholder="URL o /marcas/foto.jpg">
             </div>
           </div>
           <div class="brand-content">
@@ -187,6 +219,24 @@ const removeBrand = (index) => {
 }
 
 /* Edit Styles */
+.btn-upload {
+  background: var(--color-gold);
+  color: var(--color-primary);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 0.8rem;
+  cursor: pointer;
+  margin-bottom: 0.5rem;
+  width: 100%;
+  transition: all 0.2s ease;
+}
+.btn-upload:hover {
+  background: white;
+  transform: scale(1.02);
+}
+
 .edit-input, .edit-textarea {
   background: rgba(255,255,255,0.1);
   border: 1px dotted var(--color-gold);
