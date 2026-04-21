@@ -115,8 +115,8 @@ const brands = [
   padding: 1.5rem;
 }
 .brand-tag {
-  background-color: var(--color-gold);
-  color: var(--color-primary);
+  border: 1px solid var(--color-gold);
+  color: white;
   padding: 0.4rem 1rem;
   border-radius: 20px;
   font-size: 0.85rem;

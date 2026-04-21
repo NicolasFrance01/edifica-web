@@ -10,7 +10,6 @@
         <p class="lead">{{ aboutData.description }}</p>
         <p>{{ aboutData.extendedDescription }}</p>
         <div class="objective-box mt-4">
-          <span class="emoji-icon">👉</span>
           <p class="objective-text"><strong>Nuestro objetivo es simple:</strong> {{ aboutData.objective }}</p>
         </div>
       </div>
@@ -79,16 +78,23 @@ const aboutData = {
 .objective-box {
   background-color: #f8f9fa;
   padding: 1.5rem;
-  border-left: 4px solid var(--color-gold);
-  display: inline-flex;
-  align-items: center;
-  gap: 1rem;
-  border-radius: 0 8px 8px 0;
-  text-align: left;
+  border-top: 2px solid var(--color-gold);
+  border-bottom: 2px solid var(--color-gold);
+  display: block;
+  width: 100%;
+  border-radius: 8px;
+  text-align: center;
 }
 .objective-text {
   margin: 0;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .objective-text {
+    white-space: normal;
+  }
 }
 .about-grid {
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
