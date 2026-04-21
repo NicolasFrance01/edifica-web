@@ -7,9 +7,15 @@ import AboutUs from './AboutUs.vue'
 import BrandsSection from './BrandsSection.vue'
 
 
+const scrollToSection = (id) => {
+  const el = document.getElementById(id)
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth' })
+  }
+}
+
 const scrollToCalculator = () => {
-  const el = document.getElementById('calculator-section')
-  if (el) el.scrollIntoView({ behavior: 'smooth' })
+  scrollToSection('calculator-section')
 }
 </script>
 
@@ -22,10 +28,10 @@ const scrollToCalculator = () => {
           <img src="/logo_landing.png" alt="EDIFICA Obras y Servicios" class="logo-img">
         </div>
         <div class="nav-links">
-          <a href="#about">Nosotros</a>
-          <a href="#services">Servicios</a>
-          <a href="#brands">Marcas</a>
-          <a href="#catalog-full">Proyectos</a>
+          <a href="javascript:void(0)" @click="scrollToSection('about')">Nosotros</a>
+          <a href="javascript:void(0)" @click="scrollToSection('services')">Servicios</a>
+          <a href="javascript:void(0)" @click="scrollToSection('brands')">Marcas</a>
+          <a href="javascript:void(0)" @click="scrollToSection('catalog-full')">Proyectos</a>
           <button class="btn btn-primary" @click="scrollToCalculator">Cotizar Ahora</button>
         </div>
       </div>
@@ -42,7 +48,7 @@ const scrollToCalculator = () => {
         <p class="subtitle">Construcción de casas, edificios y muebles a medida con supervisión constante.</p>
         <div class="hero-actions">
           <button class="btn btn-primary btn-lg" @click="scrollToCalculator">Calcula tu Inversión</button>
-          <a href="#contact" class="btn btn-outline btn-lg text-white">Contáctanos</a>
+          <a href="javascript:void(0)" @click="scrollToSection('contact')" class="btn btn-outline btn-lg text-white">Contáctanos</a>
         </div>
       </div>
     </section>
