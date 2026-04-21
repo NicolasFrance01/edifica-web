@@ -1,4 +1,8 @@
-/* Global Styles & Variables */
+html {
+  scroll-padding-top: 100px; /* Offset for fixed navbar */
+  scroll-behavior: smooth;
+}
+
 :root {
   --color-primary: #1E3A8A; /* Dark Construction Blue */
   --color-primary-light: #3B82F6;
