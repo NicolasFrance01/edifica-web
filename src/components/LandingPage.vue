@@ -23,9 +23,9 @@ const scrollToCalculator = () => {
         </div>
         <div class="nav-links">
           <a href="#about">Nosotros</a>
-          <a href="#features">Servicios</a>
+          <a href="#services">Servicios</a>
           <a href="#brands">Marcas</a>
-          <a href="#projects">Proyectos</a>
+          <a href="#catalog-full">Proyectos</a>
           <button class="btn btn-primary" @click="scrollToCalculator">Cotizar Ahora</button>
         </div>
       </div>

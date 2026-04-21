@@ -3,7 +3,7 @@
     <div class="container">
       <div class="section-header text-center">
         <h2 class="text-white">Nuestras Marcas</h2>
-        <p class="text-gray">Unidades de negocio especializadas para cada necesidad.</p>
+        <p class="section-subtitle">Unidades de negocio especializadas para cada necesidad.</p>
         <div class="header-line"></div>
       </div>
 
@@ -147,6 +147,13 @@ const brands = [
   line-height: 1.6;
   margin-bottom: 1.5rem;
   font-size: 0.95rem;
+}
+.section-subtitle {
+  font-size: 1.5rem;
+  opacity: 0.8;
+  font-weight: 300;
+  color: #fff;
+  margin-top: 0.5rem;
 }
 .brand-hook {
   font-style: italic;

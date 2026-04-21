@@ -88,7 +88,8 @@ const aboutData = {
 .objective-text {
   margin: 0;
   font-size: 1.15rem;
-  white-space: nowrap;
+  line-height: 1.4;
+  padding: 0 1rem;
 }
 
 @media (max-width: 768px) {
