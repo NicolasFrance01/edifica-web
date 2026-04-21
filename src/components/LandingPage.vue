@@ -3,6 +3,8 @@ import Calculator from './Calculator.vue'
 import ServicesSection from './ServicesSection.vue'
 import CatalogSection from './CatalogSection.vue'
 import DistributorSection from './DistributorSection.vue'
+import AboutUs from './AboutUs.vue'
+import BrandsSection from './BrandsSection.vue'
 
 
 const scrollToCalculator = () => {
@@ -20,7 +22,9 @@ const scrollToCalculator = () => {
           <img src="/logo_landing.png" alt="EDIFICA Obras y Servicios" class="logo-img">
         </div>
         <div class="nav-links">
+          <a href="#about">Nosotros</a>
           <a href="#features">Servicios</a>
+          <a href="#brands">Marcas</a>
           <a href="#projects">Proyectos</a>
           <button class="btn btn-primary" @click="scrollToCalculator">Cotizar Ahora</button>
         </div>
@@ -43,6 +47,9 @@ const scrollToCalculator = () => {
       </div>
     </section>
 
+    <!-- About Us Section -->
+    <AboutUs />
+
     <!-- Services Section -->
     <ServicesSection />
 
@@ -51,6 +58,9 @@ const scrollToCalculator = () => {
 
     <!-- Catalog Section -->
     <CatalogSection />
+
+    <!-- Brands Section -->
+    <BrandsSection />
 
     <!-- Calculator & Catalog Section -->
     <section id="calculator-section" class="section bg-dark">
