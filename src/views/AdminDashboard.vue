@@ -1,44 +1,27 @@
 <template>
   <div class="admin-dashboard">
-    <nav class="admin-nav glass">
-      <div class="container nav-content">
-        <h1>Dashboard Admin</h1>
-        <button @click="logout" class="btn btn-outline text-white">Cerrar Sesión</button>
+    <!-- Admin Toolbar -->
+    <nav class="admin-toolbar glass">
+      <div class="container toolbar-content">
+        <div class="status">
+          <span class="dot"></span> Modo Edición Activo
+        </div>
+        <div class="actions">
+          <button @click="saveChanges" class="btn btn-primary btn-save">Guardar Cambios</button>
+          <button @click="logout" class="btn btn-outline text-white">Cerrar Sesión</button>
+        </div>
       </div>
     </nav>
     
-    <main class="container py-5">
-      <div class="dashboard-header">
-        <h2>Gestión de Contenido</h2>
-        <p>Edita los textos de las secciones institucionales.</p>
+    <main class="editable-content">
+      <div class="admin-notice container">
+        <p>💡 <strong>Tip:</strong> Haz clic directamente en los textos o iconos para editarlos. Los cambios se guardan al presionar el botón de la barra superior.</p>
       </div>
-
-      <div class="edit-sections grid">
-        <div class="edit-card">
-          <h3>Sección: ¿Quiénes somos?</h3>
-          <div class="form-group">
-            <label>Objetivo de la Empresa</label>
-            <textarea v-model="contentStore.about.objective" rows="3"></textarea>
-          </div>
-          <button @click="saveChanges" class="btn btn-primary">Guardar Cambios</button>
-        </div>
-
-        <div class="edit-card">
-          <h3>Sección: Marcas</h3>
-          <div v-for="(brand, index) in contentStore.brands" :key="index" class="brand-edit">
-            <h4>{{ brand.name }}</h4>
-            <div class="form-group">
-              <label>Categoría</label>
-              <input v-model="brand.category" type="text">
-            </div>
-            <div class="form-group">
-              <label>Descripción</label>
-              <textarea v-model="brand.description" rows="2"></textarea>
-            </div>
-          </div>
-          <button @click="saveChanges" class="btn btn-primary">Guardar Cambios</button>
-        </div>
-      </div>
+      
+      <!-- Reusing live components with editable prop -->
+      <AboutUs :is-editable="true" />
+      <BrandsSection :is-editable="true" />
+      
     </main>
   </div>
 </template>
@@ -46,12 +29,14 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { contentStore } from '../utils/contentStore'
+import AboutUs from '../components/AboutUs.vue'
+import BrandsSection from '../components/BrandsSection.vue'
 
 const router = useRouter()
 
 const saveChanges = () => {
-  // Changes are already reactive in contentStore
-  alert('¡Cambios guardados localmente! Se verán reflejados en la Landing Page.')
+  // Changes are reactive in contentStore and saved to localStorage via watch
+  alert('¡Cambios guardados con éxito! Los visitantes verán la nueva información.')
 }
 
 const logout = () => {
@@ -61,19 +46,65 @@ const logout = () => {
 </script>
 
 <style scoped>
-.admin-dashboard { min-height: 100vh; background: #f9fafb; color: #111827; }
-.admin-nav { background: var(--color-primary); color: white; padding: 1rem 0; }
-.nav-content { display: flex; justify-content: space-between; align-items: center; }
-.dashboard-header { margin-bottom: 3rem; }
-.edit-card { background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-.brand-edit { border-top: 1px solid #eee; padding-top: 1.5rem; margin-top: 1.5rem; }
-h3 { margin-bottom: 1.5rem; border-bottom: 2px solid var(--color-gold); padding-bottom: 0.5rem; }
-label { display: block; font-weight: 700; margin-bottom: 0.5rem; }
-input, textarea {
-  width: 100%;
-  padding: 0.75rem;
-  border-radius: 0.5rem;
-  border: 1px solid #ddd;
-  margin-bottom: 1rem;
+.admin-dashboard {
+  min-height: 100vh;
+  background: #f0f2f5;
+  padding-top: 70px; /* Space for fixed toolbar */
+}
+.admin-toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: var(--color-primary);
+  color: white;
+  padding: 0.75rem 0;
+  border-bottom: 2px solid var(--color-gold);
+}
+.toolbar-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+.dot {
+  width: 8px;
+  height: 8px;
+  background: #10b981;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #10b981;
+}
+.actions {
+  display: flex;
+  gap: 1rem;
+}
+.btn-save {
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+}
+.admin-notice {
+  background: #fffbeb;
+  border: 1px solid #fef3c7;
+  color: #92400e;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 2rem;
+  margin-bottom: -4rem;
+  position: relative;
+  z-index: 10;
+  font-size: 0.9rem;
+}
+.editable-content {
+  animation: fadeIn 0.5s ease;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 </style>

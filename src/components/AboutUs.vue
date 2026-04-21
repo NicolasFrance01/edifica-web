@@ -1,36 +1,55 @@
+<script setup>
+import { contentStore } from '../utils/contentStore'
+const props = defineProps({
+  isEditable: {
+    type: Boolean,
+    default: false
+  }
+})
+const aboutData = contentStore.about
+</script>
+
 <template>
-  <section id="about" class="section about-section">
+  <section id="about" class="section about-section" :class="{ 'admin-mode': isEditable }">
     <div class="container">
       <div class="section-header text-center">
-        <h2 class="text-primary">{{ aboutData.title }}</h2>
+        <h2 v-if="!isEditable" class="text-primary">{{ aboutData.title }}</h2>
+        <input v-else v-model="aboutData.title" class="edit-input h2-style">
         <div class="header-line"></div>
       </div>
       
       <div class="about-intro text-center mb-5">
-        <p class="lead">{{ aboutData.description }}</p>
-        <p>{{ aboutData.extendedDescription }}</p>
+        <textarea v-if="isEditable" v-model="aboutData.description" class="edit-textarea lead-style" rows="2"></textarea>
+        <p v-else class="lead">{{ aboutData.description }}</p>
+        
+        <textarea v-if="isEditable" v-model="aboutData.extendedDescription" class="edit-textarea" rows="3"></textarea>
+        <p v-else>{{ aboutData.extendedDescription }}</p>
+        
         <div class="objective-box mt-4">
-          <p class="objective-text"><strong>Nuestro objetivo es simple:</strong> {{ aboutData.objective }}</p>
+          <p class="objective-text">
+            <strong>Nuestro objetivo es simple:</strong> 
+            <span v-if="!isEditable"> {{ aboutData.objective }}</span>
+            <input v-else v-model="aboutData.objective" class="edit-input objective-inline">
+          </p>
         </div>
       </div>
 
       <div class="grid about-grid">
         <div v-for="(item, index) in aboutData.pillars" :key="index" class="pillar-card">
           <div class="pillar-icon">
-            <span v-if="item.icon">{{ item.icon }}</span>
+            <input v-if="isEditable" v-model="item.icon" class="edit-input icon-style">
+            <span v-else-if="item.icon">{{ item.icon }}</span>
           </div>
-          <h3>{{ item.title }}</h3>
-          <p>{{ item.text }}</p>
+          <input v-if="isEditable" v-model="item.title" class="edit-input h3-style">
+          <h3 v-else>{{ item.title }}</h3>
+          
+          <textarea v-if="isEditable" v-model="item.text" class="edit-textarea card-text-style" rows="3"></textarea>
+          <p v-else>{{ item.text }}</p>
         </div>
       </div>
     </div>
   </section>
 </template>
-
-<script setup>
-import { contentStore } from '../utils/contentStore'
-const aboutData = contentStore.about
-</script>
 
 <style scoped>
 .about-section {
@@ -107,4 +126,29 @@ const aboutData = contentStore.about
   color: #666;
   line-height: 1.6;
 }
+
+/* Edit Modes Styles */
+.edit-input, .edit-textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px dotted var(--color-gold);
+  background: rgba(212, 175, 55, 0.05);
+  color: inherit;
+  font-family: inherit;
+  text-align: inherit;
+  border-radius: 4px;
+}
+.edit-input:focus, .edit-textarea:focus {
+  outline: none;
+  background: rgba(212, 175, 55, 0.1);
+  border-style: solid;
+}
+.h2-style { font-size: 2.5rem; font-weight: 800; border: none; background: transparent; }
+.lead-style { font-size: 1.25rem; font-weight: 600; color: var(--color-primary); }
+.objective-inline { display: inline-block; width: auto; min-width: 300px; padding: 0 0.5rem; border-top: none; border-left: none; border-right: none; border-radius: 0; }
+.h3-style { font-size: 1.5rem; font-weight: 700; color: var(--color-primary); margin-bottom: 1rem; }
+.card-text-style { font-size: 0.95rem; line-height: 1.6; color: #666; }
+.icon-style { font-size: 1.5rem; width: 50px; text-align: center; }
+
+.admin-mode .pillar-card:hover { transform: none; box-shadow: none; }
 </style>

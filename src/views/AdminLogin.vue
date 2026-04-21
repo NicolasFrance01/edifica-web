@@ -29,9 +29,9 @@ const password = ref('')
 const error = ref('')
 
 const handleLogin = () => {
-  // Hardcoded for immediate functionality as requested (Note: should be moved to .env in production)
-  const validUser = 'eromera'
-  const validPass = 'romera2026'
+  // Credentials from .env (Vite requires VITE_ prefix for client side access)
+  const validUser = import.meta.env.VITE_ADMIN_USER
+  const validPass = import.meta.env.VITE_ADMIN_PASS
   
   if (username.value === validUser && password.value === validPass) {
     sessionStorage.setItem('admin_auth', 'true')

@@ -47,9 +47,22 @@ const defaultContent = {
       emoji: '🏠',
       description: 'Soluciones de diseño interior enfocadas en cocinas, vestidores y optimización de espacios.',
       hook: 'Pensado para transformar ambientes en lugares funcionales, ordenados y visualmente atractivos.',
-      image: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&q=80&w=800'
+    image: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&q=80&w=800'
     }
-  ]
+  ],
+  addBrand() {
+    this.brands.push({
+      name: 'Nueva Marca',
+      category: 'Categoría',
+      emoji: '✨',
+      description: 'Descripción de la marca...',
+      hook: 'Frase destacada...',
+      image: 'https://images.unsplash.com/photo-1506377585622-bedcbb027afc?auto=format&fit=crop&q=80&w=800'
+    })
+  },
+  removeBrand(index) {
+    this.brands.splice(index, 1)
+  }
 }
 
 // Load from localStorage or use defaults
