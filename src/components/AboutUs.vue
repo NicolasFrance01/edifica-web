@@ -28,29 +28,8 @@
 </template>
 
 <script setup>
-const aboutData = {
-  title: '¿Quiénes somos?',
-  description: 'EDIFICA es una empresa orientada a brindar soluciones integrales para el hogar y la construcción, combinando obras, servicios y productos en un mismo lugar.',
-  extendedDescription: 'Trabajamos con un enfoque práctico, moderno y eficiente, acompañando a cada cliente desde la idea hasta la ejecución, ofreciendo soluciones reales, funcionales y estéticas.',
-  objective: 'Que cada espacio se transforme en algo mejor, más cómodo y con valor real.',
-  pillars: [
-    {
-      title: 'Misión',
-      icon: '🎯',
-      text: 'Brindar soluciones integrales en obras, servicios y productos para el hogar, con calidad, compromiso y atención personalizada, facilitando cada etapa del proceso al cliente.'
-    },
-    {
-      title: 'Visión',
-      icon: '🚀',
-      text: 'Ser una empresa referente en Córdoba en soluciones para el hogar, destacándonos por la confianza, la calidad de nuestros productos y la integración de servicios en un solo lugar.'
-    },
-    {
-      title: 'Hacia dónde vamos',
-      icon: '🧭',
-      text: 'En EDIFICA buscamos crecer de manera sólida y escalable, incorporando nuevas líneas de productos y mejorando continuamente la experiencia del cliente. Apuntamos a convertirnos en un ecosistema completo.'
-    }
-  ]
-}
+import { contentStore } from '../utils/contentStore'
+const aboutData = contentStore.about
 </script>
 
 <style scoped>
