@@ -1,42 +1,43 @@
+<script setup>
+import { contentStore } from '../utils/contentStore'
+
+const props = defineProps({
+  isEditable: {
+    type: Boolean,
+    default: false
+  }
+})
+
+const distData = contentStore.distributor
+</script>
+
 <template>
-  <section class="section distributor-section">
+  <section class="section distributor-section" :class="{ 'admin-mode': isEditable }">
     <div class="overlay"></div>
     <div class="container text-center relative z-10">
       <div class="badge-wrapper">
-        <span class="badge">Distribuidor Oficial</span>
+        <input v-if="isEditable" v-model="distData.badge" class="edit-input badge-style text-center">
+        <span v-else class="badge">{{ distData.badge }}</span>
       </div>
-      <h2 class="title">PIATTI</h2>
-      <p class="subtitle">Aberturas de Alta Prestación | PVC & Aluminio</p>
+      
+      <input v-if="isEditable" v-model="distData.title" class="edit-input title-style text-center">
+      <h2 v-else class="title">{{ distData.title }}</h2>
+      
+      <input v-if="isEditable" v-model="distData.subtitle" class="edit-input subtitle-style text-center">
+      <p v-else class="subtitle">{{ distData.subtitle }}</p>
       
       <div class="grid distributor-grid mt-5">
-        <div class="benefit-card">
+        <div v-for="(benefit, index) in distData.benefits" :key="index" class="benefit-card">
           <div class="icon-wrapper">
-            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather">
-              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-              <polyline points="22 4 12 14.01 9 11.01"></polyline>
-            </svg>
+             <!-- Simplified icon handling, for full control icons could be SVGs in store too -->
+             <span class="icon-placeholder">✨</span>
           </div>
-          <h3>Garantía de Fábrica</h3>
-          <p>Respaldo directo y servicio post-venta asegurado.</p>
-        </div>
-        <div class="benefit-card">
-          <div class="icon-wrapper">
-            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather">
-              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-            </svg>
-          </div>
-          <h3>Instalación Certificada</h3>
-          <p>Personal capacitado bajo estándares internacionales.</p>
-        </div>
-        <div class="benefit-card">
-          <div class="icon-wrapper">
-            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather">
-              <line x1="12" y1="1" x2="12" y2="23"></line>
-              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-            </svg>
-          </div>
-          <h3>Precios Directos</h3>
-          <p>Accede a tarifas preferenciales sin intermediarios.</p>
+          
+          <input v-if="isEditable" v-model="benefit.title" class="edit-input h3-style text-center">
+          <h3 v-else>{{ benefit.title }}</h3>
+          
+          <textarea v-if="isEditable" v-model="benefit.description" class="edit-textarea desc-style text-center" rows="2"></textarea>
+          <p v-else>{{ benefit.description }}</p>
         </div>
       </div>
     </div>
@@ -144,4 +145,21 @@
   transform: scale(1.05);
   box-shadow: 0 0 20px rgba(251, 191, 36, 0.4);
 }
+
+/* Edit Styles */
+.edit-input, .edit-textarea {
+  background: rgba(255,255,255,0.1);
+  border: 1px dotted var(--color-gold);
+  color: white;
+  padding: 0.3rem;
+  border-radius: 4px;
+  width: 100%;
+  font-family: inherit;
+}
+.badge-style { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: #fbbf24; }
+.title-style { font-size: 4rem; font-weight: 900; background: none; -webkit-text-fill-color: white; }
+.subtitle-style { font-size: 1.5rem; font-weight: 300; opacity: 0.8; }
+.h3-style { font-size: 1.25rem; font-weight: 800; }
+.desc-style { font-size: 1rem; opacity: 0.9; }
+.icon-placeholder { font-size: 2rem; }
 </style>

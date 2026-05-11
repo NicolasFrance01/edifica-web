@@ -1,22 +1,63 @@
 <script setup>
 import { ref } from 'vue'
+import { contentStore } from '../utils/contentStore'
 
-const categories = [
-  { id: 'escaleras', name: 'Escaleras', iconPath: 'M8 3v18 M16 3v18 M3 21h18 M3 15h18 M3 9h18' },
-  { id: 'aberturas', name: 'Aberturas Piatti', iconPath: 'M3 3h18v18H3z M12 3v18 M3 12h18' },
-  { id: 'interiorismo', name: 'Interiorismo', iconPath: 'M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4' },
-  { id: 'artefactos', name: 'Artefactos', iconPath: 'M9 21h6 M12 3a7 7 0 0 0-7 7c0 2.3 1.3 4.3 3.3 5.3C9.8 16.1 10 17.5 10 19v1h4v-1c0-1.5.2-2.9 1.7-3.7 2-1 3.3-3 3.3-5.3a7 7 0 0 0-7-7z' }
-]
+const props = defineProps({
+  isEditable: {
+    type: Boolean,
+    default: false
+  }
+})
 
+const catalogData = contentStore.catalog
+const categories = catalogData.categories
 const activeCategory = ref('escaleras')
+
+const currentEditingCat = ref(null)
+
+const triggerUpload = (cat) => {
+  currentEditingCat.value = cat
+  document.getElementById('catalog-file-input').click()
+}
+
+const handleImageUpload = (event, cat) => {
+  const file = event.target.files[0]
+  if (file) {
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      cat.image = e.target.result
+    }
+    reader.readAsDataURL(file)
+  }
+}
+
+const addItem = (cat) => {
+  cat.items.push('Nuevo Item')
+}
+
+const removeItem = (cat, index) => {
+  cat.items.splice(index, 1)
+}
 </script>
 
 <template>
-  <section id="catalog-full" class="section">
+  <section id="catalog-full" class="section" :class="{ 'admin-mode': isEditable }">
     <div class="container">
+      <!-- Hidden File Input -->
+      <input 
+        type="file" 
+        id="catalog-file-input" 
+        style="display: none;" 
+        accept="image/*"
+        @change="handleImageUpload($event, currentEditingCat)"
+      >
+
       <div class="section-header text-center">
-        <h2>Catálogo de Productos</h2>
-        <p>Calidad y diseño para tu hogar.</p>
+        <input v-if="isEditable" v-model="catalogData.title" class="edit-input h2-style text-center">
+        <h2 v-else>{{ catalogData.title }}</h2>
+        
+        <input v-if="isEditable" v-model="catalogData.subtitle" class="edit-input p-style text-center">
+        <p v-else>{{ catalogData.subtitle }}</p>
       </div>
       
       <div class="tabs">
@@ -26,47 +67,41 @@ const activeCategory = ref('escaleras')
           :class="['tab-btn', { active: activeCategory === cat.id }]"
           @click="activeCategory = cat.id"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
-            <path :d="cat.iconPath" />
-          </svg>
-          {{ cat.name }}
+          <input v-if="isEditable" v-model="cat.name" class="edit-input tab-input">
+          <span v-else>{{ cat.name }}</span>
         </button>
       </div>
 
       <div class="catalog-content mt-4 fade-in">
-
-
-        <div v-if="activeCategory === 'escaleras'" class="category-panel">
-          <h3>Escaleras a Medida</h3>
-          <p>Diseños exclusivos en madera, metal y vidrio para interiores y exteriores.</p>
-          <div class="placeholder-box">
-            <span>Visualización de Proyectos</span>
+        <div v-for="cat in categories" :key="cat.id">
+          <div v-if="activeCategory === cat.id" class="category-panel">
+            <div class="panel-layout">
+              <div class="panel-text">
+                <input v-if="isEditable" v-model="cat.title" class="edit-input h3-style">
+                <h3 v-else>{{ cat.title }}</h3>
+                
+                <textarea v-if="isEditable" v-model="cat.description" class="edit-textarea desc-style" rows="3"></textarea>
+                <p v-else>{{ cat.description }}</p>
+                
+                <div v-if="cat.items && cat.items.length > 0" class="product-grid">
+                  <div v-for="(item, idx) in cat.items" :key="idx" class="product-card">
+                    <input v-if="isEditable" v-model="cat.items[idx]" class="edit-input item-input">
+                    <span v-else>{{ item }}</span>
+                    <button v-if="isEditable" @click="removeItem(cat, idx)" class="remove-item">×</button>
+                  </div>
+                  <button v-if="isEditable" @click="addItem(cat)" class="add-item-btn">+ Agregar Item</button>
+                </div>
+                <div v-else-if="isEditable" class="mt-4">
+                  <button @click="addItem(cat)" class="add-item-btn">+ Empezar Lista de Items</button>
+                </div>
+              </div>
+              
+              <div class="panel-image">
+                <img :src="cat.image" :alt="cat.title" class="cat-img">
+                <button v-if="isEditable" class="btn-upload-cat" @click="triggerUpload(cat)">📷 Cambiar Imagen</button>
+              </div>
+            </div>
           </div>
-        </div>
-
-        <div v-if="activeCategory === 'aberturas'" class="category-panel">
-          <h3>Distribuidor Oficial Piatti</h3>
-          <p>La mejor tecnología en aberturas de PVC y Aluminio.</p>
-           <div class="product-grid">
-            <div class="product-card">Ventana Oscilobatiente</div>
-            <div class="product-card">Puerta Pivotante</div>
-            <div class="product-card">Portón Automático</div>
-          </div>
-        </div>
-
-        <div v-if="activeCategory === 'interiorismo'" class="category-panel">
-          <h3>Mobiliario y Vestidores</h3>
-          <p>Optimización de espacios con diseño exclusivo.</p>
-           <div class="product-grid">
-            <div class="product-card">Placar Melamina</div>
-            <div class="product-card">Vestidor Walk-in</div>
-            <div class="product-card">Mueble TV</div>
-          </div>
-        </div>
-
-        <div v-if="activeCategory === 'artefactos'" class="category-panel">
-          <h3>Terminaciones y Complementos</h3>
-          <p>Griferías, sanitarios y detalles constructivos.</p>
         </div>
       </div>
     </div>
@@ -139,7 +174,83 @@ const activeCategory = ref('escaleras')
   font-weight: 600;
   color: var(--color-text);
   border: 1px solid #eee;
+  position: relative;
 }
+
+.panel-layout {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  text-align: left;
+}
+.cat-img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 1rem;
+}
+.panel-image { position: relative; }
+
+/* Edit Styles */
+.edit-input, .edit-textarea {
+  background: rgba(0,0,0,0.05);
+  border: 1px dotted var(--color-primary);
+  color: inherit;
+  padding: 0.3rem;
+  border-radius: 4px;
+  width: 100%;
+  font-family: inherit;
+}
+.h2-style { font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; }
+.p-style { font-size: 1.1rem; opacity: 0.8; }
+.h3-style { font-size: 1.8rem; font-weight: 800; margin-bottom: 1rem; }
+.desc-style { font-size: 1.1rem; line-height: 1.6; color: #666; }
+.tab-input { text-align: center; font-weight: 600; }
+.item-input { background: none; border: none; text-align: center; }
+
+.btn-upload-cat {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: var(--color-gold);
+  color: var(--color-primary);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.remove-item {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: #f87171;
+  color: white;
+  border: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.add-item-btn {
+  background: none;
+  border: 2px dashed #ccc;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  color: #888;
+  cursor: pointer;
+  font-weight: 600;
+}
+
 .fade-in { animation: fadeIn 0.3s ease; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+@media (max-width: 992px) {
+  .panel-layout { grid-template-columns: 1fr; }
+  .cat-img { height: 250px; }
+}
 </style>

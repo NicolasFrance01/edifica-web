@@ -20,6 +20,9 @@
       
       <!-- Reusing live components with editable prop -->
       <AboutUs :is-editable="true" />
+      <ServicesSection :is-editable="true" />
+      <DistributorSection :is-editable="true" />
+      <CatalogSection :is-editable="true" />
       <BrandsSection :is-editable="true" />
       
     </main>
@@ -31,6 +34,9 @@ import { useRouter } from 'vue-router'
 import { contentStore } from '../utils/contentStore'
 import AboutUs from '../components/AboutUs.vue'
 import BrandsSection from '../components/BrandsSection.vue'
+import ServicesSection from '../components/ServicesSection.vue'
+import DistributorSection from '../components/DistributorSection.vue'
+import CatalogSection from '../components/CatalogSection.vue'
 
 const router = useRouter()
 
