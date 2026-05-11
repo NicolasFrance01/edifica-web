@@ -1,0 +1,8 @@
+{
+  "name": "edifica-static",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "echo 'Build already done, skipping...'",
+    "install": "echo 'Skipping install'"
+  }
+}
